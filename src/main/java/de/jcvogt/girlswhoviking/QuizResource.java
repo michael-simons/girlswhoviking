@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.jcvogt;
+package de.jcvogt.girlswhoviking;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
@@ -28,18 +28,17 @@ import javax.ws.rs.core.MediaType;
 /**
  * @author Michael J. Simons
  */
-@Path("/")
-public class IndexResource {
+@Path("/girlswhoviking")
+public class QuizResource {
+	private final Template quiz;
 
-	private final Template index;
-
-	public IndexResource(Template index) {
-		this.index = Objects.requireNonNull(index, "The index template is required.");
+	public QuizResource(Template quiz) {
+		this.quiz = Objects.requireNonNull(quiz, "The quiz template is required.");
 	}
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance get() {
-		return index.instance();
+		return quiz.instance();
 	}
 }
