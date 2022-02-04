@@ -1,0 +1,21 @@
+form.reset button[type="submit"] {
+    background-color: transparent;
+    border: 1px solid var(--border, black);
+    color: var(--text, black);
+}
+
+form.reset button[type="submit"]:hover {
+    border: 1px solid var(--accent, black);
+}
+
+div.centered-content {
+    text-align: center;
+}
+
+div.inline-forms form {
+    display: inline;
+}
+
+input[type="radio"] {
+    margin-right: 0.5em;
+}

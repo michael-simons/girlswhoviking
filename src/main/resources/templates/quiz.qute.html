@@ -3,6 +3,27 @@
 <main>
     <h2>Welche Schildmaid bist Du?</h2>
 
+    {#let currentQuestion=quiz.currentQuestion.orElse(null)}
+    {#if currentQuestion}
+    <h3>Frage {currentQuestion.idx}: {currentQuestion.question}</h3>
+    <div class="inline-forms">
+        <form method="post" action="/answer">
+            <p>
+                {#for answer in currentQuestion.answers}
+                <label><input name="selectedAnswer" type="radio" value="{answer_index}"/>{answer.value}</label> <br/>
+                {/for}
+            </p>
+            <button type="submit">{currentQuestion.last ? 'Auswerten' : 'Weiter'}</button>
+        </form>
+
+        <form method="post" action="/reset" class="reset">
+            <button type="submit">Von vorne anfangen</button>
+        </form>
+    </div>
+
+    {#else}
     <p>Das Quiz… Kommt ganz bald.</p>
+    {/if}
+    {/let}
 </main>
 {/include}

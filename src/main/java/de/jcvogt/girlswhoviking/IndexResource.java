@@ -31,15 +31,15 @@ import javax.ws.rs.core.MediaType;
 @Path("/")
 public class IndexResource {
 
-	private final Template index;
+	private final Template indexTemplate;
 
 	public IndexResource(Template index) {
-		this.index = Objects.requireNonNull(index, "The index template is required.");
+		this.indexTemplate = Objects.requireNonNull(index, "The index template is required.");
 	}
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance get() {
-		return index.instance();
+		return indexTemplate.instance();
 	}
 }

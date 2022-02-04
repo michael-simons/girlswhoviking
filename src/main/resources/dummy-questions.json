@@ -1,0 +1,32 @@
+[
+  {
+    "value": "Was isst Du lieber?",
+    "answers": [
+      {
+        "value": "Chips",
+        "increments": [
+          0,
+          1
+        ]
+      },
+      {
+        "value": "Schokolade",
+        "increments": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "value": "Was trinkst Du lieber?",
+    "answers": [
+      {
+        "value": "Kaffee"
+      },
+      {
+        "value": "Tee"
+      }
+    ]
+  }
+]
