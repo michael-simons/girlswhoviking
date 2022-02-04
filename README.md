@@ -1,5 +1,7 @@
 # #girlswhoviking
 
+![Build Status](https://github.com/michael-simons/girlswhoviking/actions/workflows/build.yml/badge.svg)
+
 _Ein interaktives Online-Quiz um den Launch des Buches 'Schildmaid' von Judith und Christian Vogt zu begleiten._
 
 Das Projekt ist in Java programmiert und basiert auf [Quarkus](https://quarkus.io). Es nutzt das Server-Side-Rendering-Framework
@@ -20,3 +22,5 @@ lokaler Server unter http://localhost:8080 erreichbar.
 
 Geänderte Dateien oder Java-Klassen werden durch den eingebauten Entwicklungsmodus automatisch neu kompiliert und geladen. 
 Eine interaktive Entwickler:innen-UI ist im Dev-Modus unter http://localhost:8080/q/dev/ verfügbar.
+
+Dieses Repository wird nach erfolgreichen [Builds](https://github.com/michael-simons/girlswhoviking/actions/workflows/build.yml) direkt unter https://girlswhoviking.herokuapp.com live zur Verfügung gestellt.
