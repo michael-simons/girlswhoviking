@@ -28,18 +28,37 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Quiz implements Serializable {
 
+	/**
+	 * Represents one answer with its increments for the various results.
+	 *
+	 * @param value      the textual value of the answer
+	 * @param increments the list of increments
+	 */
 	public record Answer(String value, List<Integer> increments) {
 		public Answer {
 			increments = increments == null ? Collections.emptyList() : List.copyOf(increments);
 		}
 	}
 
+	/**
+	 * Represents a questions with its possible answers.
+	 *
+	 * @param value   the textual value of the question
+	 * @param answers the list of answers
+	 */
 	public record Question(String value, List<Answer> answers) {
 		public Question {
 			answers = answers == null ? Collections.emptyList() : List.copyOf(answers);
 		}
 	}
 
+	/**
+	 * Represents the current question to be answered.
+	 *
+	 * @param value the underlying question
+	 * @param idx   the 1-based-index in the list of questions
+	 * @param last  a flag if this is the last question
+	 */
 	public record CurrentQuestion(Question value, int idx, boolean last) {
 
 		public String question() {
@@ -51,6 +70,9 @@ public class Quiz implements Serializable {
 		}
 	}
 
+	/**
+	 * The actual result of the quiz.
+	 */
 	public record Result() {
 	}
 
