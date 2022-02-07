@@ -1,32 +1,67 @@
-[
-  {
-    "value": "Was isst Du lieber?",
-    "answers": [
-      {
-        "value": "Chips",
-        "increments": [
-          0,
-          1
-        ]
-      },
-      {
-        "value": "Schokolade",
-        "increments": [
-          1,
-          0
-        ]
-      }
-    ]
-  },
-  {
-    "value": "Was trinkst Du lieber?",
-    "answers": [
-      {
-        "value": "Kaffee"
-      },
-      {
-        "value": "Tee"
-      }
-    ]
-  }
-]
+{
+  "outcomes": [
+    {
+      "name": "Dineke",
+      "title": "Die Navigatorin",
+      "description": "Du hast eine Leidenschaft, und auch innerhalb engster Grenzen bist du ihr immer nachgegangen. Du bist die Älteste in der Gemeinschaft und unfreiwillig dort gelandet. Doch die anderen wachsen dir ans Herz, und Freiheit ist eigentlich nur Gewöhnungssache.",
+      "quote": "Für immer könnte ich auf diesen Wellen, unter diesen Wolken, zwischen diesen Horizonten sein!"
+    },
+    {
+      "name": "Tinna",
+      "title": "N/A",
+      "description": "N/A",
+      "quote": "N/A"
+    }
+  ],
+  "questions": [
+    {
+      "value": "Was isst Du lieber?",
+      "answers": [
+        {
+          "value": "Chips",
+          "increments": [
+            0,
+            1
+          ]
+        },
+        {
+          "value": "Schokolade",
+          "increments": [
+            1,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "value": "Was trinkst Du lieber?",
+      "answers": [
+        {
+          "value": "Kaffee",
+          "increments": [
+            0,
+            1
+          ]
+        },
+        {
+          "value": "Tee",
+          "increments": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "value": "Was machst Du lieber?",
+      "answers": [
+        {
+          "value": "Schlafen"
+        },
+        {
+          "value": "Radfahren"
+        }
+      ]
+    }
+  ]
+}

@@ -22,9 +22,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 /**
@@ -53,6 +55,34 @@ public class Quiz implements Serializable {
 	public record Question(String value, List<Answer> answers) {
 		public Question {
 			answers = answers == null ? Collections.emptyList() : List.copyOf(answers);
+		}
+	}
+
+	/**
+	 * The possible outcome of a quiz
+	 *
+	 * @param name        The name of the person
+	 * @param title       The persons title
+	 * @param description A description
+	 * @param quote       A quote
+	 */
+	public record Outcome(String name, String title, String description, String quote) {
+
+		public String formattedQuote() {
+			return "\"" + quote() + "\"\n- " + name + "\nMach auch Du das Quiz:";
+		}
+	}
+
+	/**
+	 * The definition of a quiz consists of
+	 *
+	 * @param outcomes  some possible outcomes
+	 * @param questions and a number of questions
+	 */
+	public record Definition(List<Outcome> outcomes, List<Question> questions) {
+		public Definition {
+			outcomes = outcomes == null ? Collections.emptyList() : List.copyOf(outcomes);
+			questions = questions == null ? Collections.emptyList() : List.copyOf(questions);
 		}
 	}
 
@@ -92,25 +122,25 @@ public class Quiz implements Serializable {
 		}
 	}
 
-	/**
-	 * The actual result of the quiz.
-	 */
-	public record Result() {
-	}
-
 	@Serial
 	private static final long serialVersionUID = -7361338223494472755L;
 
+	private final Definition definition;
 	private final List<Question> questions;
 
-	private final AtomicInteger counter = new AtomicInteger(0);
+	private int counter = 0;
 
-	public Quiz(List<Question> questions) {
-		this.questions = questions;
+	private final Map<Integer, Integer> points = new TreeMap<>();
+
+	private Outcome outcome;
+
+	public Quiz(Definition definition) {
+		this.definition = definition;
+		this.questions = definition.questions();
 	}
 
 	public boolean isDone() {
-		return this.counter.get() >= questions.size();
+		return this.counter >= questions.size();
 	}
 
 	public Optional<CurrentQuestion> getCurrentQuestion() {
@@ -119,33 +149,75 @@ public class Quiz implements Serializable {
 			return Optional.empty();
 		}
 
-		var idx = this.counter.get();
+		var idx = this.counter;
 		return Optional.of(
 			new CurrentQuestion(questions.get(idx), idx + 1, idx == this.questions.size() - 1));
 	}
 
 	public boolean evaluate(Integer selectedAnswer) {
 
-		Objects.requireNonNull(selectedAnswer);
-
 		if (isDone()) {
 			return true;
 		}
 
-		this.counter.incrementAndGet();
+		var selectedQuestions = questions.get(this.counter);
+		var answers = selectedQuestions.answers();
+
+		Objects.requireNonNull(selectedAnswer);
+		if (selectedAnswer < 0 || selectedAnswer >= answers.size()) {
+			throw new IllegalArgumentException("Illegal answer (%d)".formatted(selectedAnswer));
+		}
+
+		var increments = answers.get(selectedAnswer).increments();
+		if (increments.size() != answers.size()) {
+			var value = this.points.getOrDefault(selectedAnswer, 0);
+			this.points.put(selectedAnswer, value + 1);
+		} else {
+			for (int i = 0; i < increments.size(); i++) {
+				var increment = increments.get(i);
+				var value = this.points.getOrDefault(i, 0);
+				this.points.put(i, value + increment);
+			}
+		}
+
+		++this.counter;
 		return isDone();
 	}
 
-	public Optional<Result> getResult() {
+	// We do check this by checking if there's something in the answer list
+	@SuppressWarnings("OptionalGetWithoutIsPresent")
+	public Optional<Outcome> getResult() {
 
 		if (this.questions.isEmpty() || !this.isDone()) {
 			return Optional.empty();
 		}
 
-		return Optional.of(new Result());
+		if (this.outcome == null) {
+			// Cache this so that a possible randomization of a non-unique answer is stable
+			this.outcome = this.points.entrySet().stream().max(Map.Entry.comparingByValue())
+				.map(maxEntry -> {
+					var allEntriesWithValue = points.entrySet().stream()
+						.filter(e -> e.getValue().equals(maxEntry.getValue()))
+						.toList();
+
+					if (allEntriesWithValue.size() == 1) {
+						return maxEntry;
+					} else {
+						var index = ThreadLocalRandom.current().nextInt(0, allEntriesWithValue.size());
+						return allEntriesWithValue.get(index);
+					}
+				})
+				.map(Map.Entry::getKey)
+				.map(definition.outcomes()::get)
+				.get();
+		}
+
+		return Optional.of(this.outcome);
 	}
 
 	public void reset() {
-		this.counter.set(0);
+		this.counter = 0;
+		this.points.clear();
+		this.outcome = null;
 	}
 }

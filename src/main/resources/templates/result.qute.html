@@ -1,12 +1,48 @@
 {#include base}
 {#title} | Welche Schildmaid bist Du?{/title}
-<main>
-    <h2>Welche Schildmaid bist Du?</h2>
+{#scripts}
+<script>window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
 
-    <p>Sorry, das war jetzt leider für die Katz: Die Auswertung ist noch nicht fertig.</p>
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+
+    return t;
+}(document, "script", "twitter-wjs"));</script>
+{/scripts}
+<main>
+    <h2>{result.title}</h2>
+
+    <p>Du bist <strong>{result.name}</strong>, {str:l(result.title)}: {result.description}</p>
+
+    <div class="centered-content">
+        <figure>
+            <img src="/img/{str:l(result.name)}.jpg" alt="{result.name}">
+            <figcaption>{result.name}</figcaption>
+        </figure>
+    </div>
+
+    <blockquote>
+        <p>{result.quote}</p>
+        <p><cite>- {result.name}</cite></p>
+    </blockquote>
 
     <p>
-        <a href="/start">Nochmal von vorne beginnen.</a>
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet?text={str:urlEncode(result.formattedQuote)}&url=https://die13gezeichneten.herokuapp.com">Teilen</a>
+        <br/>
+        <a href="/start">Nochmal von vorne beginnen</a> oder direkt das Buch <a
+            href="https://www.piper.de/buecher/schildmaid-isbn-978-3-492-70598-1">beim Verlag</a> bestellen.</a>
+        Die Vögte sind als <a href="https://www.patreon.com/dievoegte">Vogt&Vriends</a> auf Patreon und freuen sich über
+        eure Unterstützung.
     </p>
 </main>
 {/include}

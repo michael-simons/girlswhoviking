@@ -33,11 +33,12 @@ class QuizServiceTest {
 	QuizService quizService;
 
 	@Test
-	void shouldLoadSteps() {
+	void shouldLoadDefinition() {
 
-		var questions = quizService.getQuestions();
-		assertThat(questions)
-			.hasSize(2)
+		var definition = quizService.getDefinition();
+		assertThat(definition.outcomes()).extracting(Quiz.Outcome::name).containsExactly("Dineke", "Tinna");
+		assertThat(definition.questions())
+			.hasSize(3)
 			.first()
 			.satisfies(q -> {
 				assertThat(q.value()).isEqualTo("Was isst Du lieber?");
@@ -47,5 +48,18 @@ class QuizServiceTest {
 					.extracting(Quiz.Answer::value)
 					.containsExactly("Chips", "Schokolade");
 			});
+	}
+
+	@Test
+	void quizShouldEvaluteDummyQuestion() {
+
+		var quiz = quizService.newQuiz();
+		assertThat(quiz.getResult()).isEmpty();
+		assertThat(quiz.evaluate(0)).isFalse();
+		assertThat(quiz.getResult()).isEmpty();
+		assertThat(quiz.evaluate(1)).isFalse();
+		assertThat(quiz.getResult()).isEmpty();
+		assertThat(quiz.evaluate(1)).isTrue();
+		assertThat(quiz.getResult()).map(Quiz.Outcome::name).hasValue("Tinna");
 	}
 }

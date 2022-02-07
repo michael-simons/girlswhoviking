@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import java.util.List;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,7 +31,7 @@ class QuizTest {
 	@Test
 	void shouldBeDoneWithoutQuestions() {
 
-		var quiz = new Quiz(List.of());
+		var quiz = new Quiz(new Quiz.Definition(List.of(), List.of()));
 		assertThat(quiz.isDone()).isTrue();
 		assertThat(quiz.getCurrentQuestion()).isEmpty();
 		assertThat(quiz.evaluate(42)).isTrue();
@@ -40,8 +41,8 @@ class QuizTest {
 	@Test
 	void shouldAdvanceAfterEvaluate() {
 
-		var question = new Quiz.Question("Was ist die Antwort?", List.of());
-		var quiz = new Quiz(List.of(question));
+		var question = new Quiz.Question("Was ist die Antwort?", List.of(new Quiz.Answer("42", List.of())));
+		var quiz = new Quiz(new Quiz.Definition(List.of(), List.of(question)));
 		assertThat(quiz.getCurrentQuestion())
 			.hasValueSatisfying(c -> {
 					assertThat(c.last()).isTrue();
@@ -49,45 +50,57 @@ class QuizTest {
 					assertThat(c.question()).isEqualTo("Was ist die Antwort?");
 				}
 			);
-		assertThat(quiz.evaluate(42)).isTrue();
+		assertThat(quiz.evaluate(0)).isTrue();
 		assertThat(quiz.getCurrentQuestion()).isEmpty();
 	}
 
 	@Test
-	void shouldCreateRandomIndexes() {
+	void shouldCheckAnswerIndex() {
 
-		var question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", List.of()), 0, true);
-		assertThat(question.indexes()).isEmpty();
-
-		var answers = List.of(
-			new Quiz.Answer("a", List.of()),
-			new Quiz.Answer("b", List.of()),
-			new Quiz.Answer("c", List.of())
-		);
-		question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true);
-		assertThat(question.indexes())
-			.hasSize(3)
-			.containsExactlyInAnyOrder(0, 1, 2);
+		var question = new Quiz.Question("Was ist die Antwort?", List.of(new Quiz.Answer("42", List.of())));
+		var quiz = new Quiz(new Quiz.Definition(List.of(), List.of(question)));
+		assertThatIllegalArgumentException().isThrownBy(() -> quiz.evaluate(42))
+			.withMessage("Illegal answer (42)");
 	}
 
-	@Test
-	void shouldFailOnWrongIndexes() {
+	@Nested
+	class CurrentQuestionTest {
+		@Test
+		void shouldCreateRandomIndexes() {
 
-		var answers = List.of(
-			new Quiz.Answer("a", List.of()),
-			new Quiz.Answer("b", List.of()),
-			new Quiz.Answer("c", List.of())
-		);
-		assertThatIllegalArgumentException().isThrownBy(
-				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true, List.of()))
-			.withMessage("Invalid number of indexes.");
-		assertThatIllegalArgumentException().isThrownBy(
-				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
-					List.of(-1, 0, 1)))
-			.withMessage("Invalid index in index list.");
-		assertThatIllegalArgumentException().isThrownBy(
-				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
-					List.of(0, 1, 42)))
-			.withMessage("Invalid index in index list.");
+			var question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", List.of()), 0, true);
+			assertThat(question.indexes()).isEmpty();
+
+			var answers = List.of(
+				new Quiz.Answer("a", List.of()),
+				new Quiz.Answer("b", List.of()),
+				new Quiz.Answer("c", List.of())
+			);
+			question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true);
+			assertThat(question.indexes())
+				.hasSize(3)
+				.containsExactlyInAnyOrder(0, 1, 2);
+		}
+
+		@Test
+		void shouldFailOnWrongIndexes() {
+
+			var answers = List.of(
+				new Quiz.Answer("a", List.of()),
+				new Quiz.Answer("b", List.of()),
+				new Quiz.Answer("c", List.of())
+			);
+			assertThatIllegalArgumentException().isThrownBy(
+					() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true, List.of()))
+				.withMessage("Invalid number of indexes.");
+			assertThatIllegalArgumentException().isThrownBy(
+					() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
+						List.of(-1, 0, 1)))
+				.withMessage("Invalid index in index list.");
+			assertThatIllegalArgumentException().isThrownBy(
+					() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
+						List.of(0, 1, 42)))
+				.withMessage("Invalid index in index list.");
+		}
 	}
 }

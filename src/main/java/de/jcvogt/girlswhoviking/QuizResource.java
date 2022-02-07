@@ -75,7 +75,7 @@ public class QuizResource {
 	public Response result() {
 
 		return currentQuiz.getResult()
-			.map(r -> Response.ok(resultTemplate.instance()))
+			.map(r -> Response.ok(resultTemplate.instance().data("result", r)))
 			.orElseGet(() -> Response.seeOther(URI.create("start")))
 			.build();
 	}

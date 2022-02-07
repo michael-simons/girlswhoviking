@@ -15,11 +15,10 @@
  */
 package de.jcvogt.girlswhoviking;
 
-import de.jcvogt.girlswhoviking.Quiz.Question;
+import de.jcvogt.girlswhoviking.Quiz.Definition;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
@@ -27,7 +26,6 @@ import javax.enterprise.inject.Produces;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -36,26 +34,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ApplicationScoped
 class QuizService {
 
-	private final List<Question> questions;
+	private final Definition definition;
 
 	QuizService(@ConfigProperty(name = "girlswhoviking.questions") String questions, ObjectMapper objectMapper) {
 		try {
-			this.questions = List.copyOf(objectMapper.readValue(
-				this.getClass().getClassLoader().getResourceAsStream(questions),
-				new TypeReference<>() {
-				}));
+			this.definition = objectMapper.readValue(this.getClass().getClassLoader().getResourceAsStream(questions),
+				Definition.class);
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
 
-	List<Question> getQuestions() {
-		return this.questions;
+	Definition getDefinition() {
+		return definition;
 	}
 
 	@Produces
 	@SessionScoped
 	Quiz newQuiz() {
-		return new Quiz(this.questions);
+		return new Quiz(this.definition);
 	}
 }

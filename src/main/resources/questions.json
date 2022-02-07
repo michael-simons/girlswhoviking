@@ -1,1 +1,256 @@
-[]
+{
+  "outcomes": [
+    {
+      "name": "Dineke",
+      "title": "Die Navigatorin",
+      "description": "Du hast eine Leidenschaft, und auch innerhalb engster Grenzen bist du ihr immer nachgegangen. Du bist die Älteste in der Gemeinschaft und unfreiwillig dort gelandet. Doch die anderen wachsen dir ans Herz, und Freiheit ist eigentlich nur Gewöhnungssache.",
+      "quote": "Für immer könnte ich auf diesen Wellen, unter diesen Wolken, zwischen diesen Horizonten sein!"
+    },
+    {
+      "name": "Herdis",
+      "title": "Die Völva",
+      "description": "Du bist das unheimliche Mädchen. Du siehst hinter die Dinge, und das macht anderen Angst. Du warst schon als Kind anders, und gleichzeitig bist du es überdrüssig, abseits zu stehen. In der Gemeinschaft findest du heraus, dass es tröstlich sein kann, zusammen nicht dazuzugehören.",
+      "quote": "Was, wenn auch Ragnarök nur etwas ist, was wir noch niemals gedacht haben?"
+    },
+    {
+      "name": "Tinna",
+      "title": "Die Skaldin",
+      "description": "Du erzählst die Geschichte deiner Gemeinschaft. Du weißt um die Macht, die Erzählungen über uns haben und hast längst begriffen, dass wir selbst eine neue herbeisingen müssen. Du willst mit aller Kraft, dass es möglich ist, den alten Geschichten zu entsagen. Und jemandem wie dir könnte es gelingen.",
+      "quote": "Die größte, schrecklichste Macht ist die Illusion, dass es nur eine mögliche Art und Weise gibt, wie wir leben können."
+    },
+    {
+      "name": "Skade",
+      "title": "Die Kämpferin",
+      "description": "Du bist impulsiv und ziehst deine Kraft aus deiner Wut (und dem Trauma deiner Vergangenheit). Du gibst der Unternehmung eine Richtung - ohne dich kämen deine Schwestern nie aus dem Quark! Aber du brauchst sie, so, wie sie dich brauchen. Ohne sie wärst du nur drei starke Emotionen in einem Regenmantel.",
+      "quote": "Haben wir uns nicht zu niemandes Schwester gemacht, um einander Schwestern zu sein?"
+    },
+    {
+      "name": "Eyvor",
+      "title": "Die Steuerfrau",
+      "description": "Du hegst unträumbare Träume und hast gleichzeitig Angst, sie könnten in Erfüllung gehen. Du kannst jahrelang planen und vorbereiten, doch du brauchst deine Gemeinschaft, um den ersten Schritt ins Unbekannte zu tun. Und wenn der erste möglich war, sind es dann nicht auch alle weiteren?",
+      "quote": "All diese Kriege, Fahrten, Herausforderungen, Mordbrände. Sie wären Männern nicht die Hälfte wert, würden wir einander bewundern und nicht sie."
+    }
+  ],
+  "questions": [
+    {
+      "value": "Zu allererst: Ziehe eine Rune!",
+      "answers": [
+        {
+          "value": "ᛚ - Logr, die Rune der See"
+        },
+        {
+          "value": "þ - þurs, die Rune der Riesen"
+        },
+        {
+          "value": "ᛈ - Peorþ, die Rune der tiefen Veränderung"
+        },
+        {
+          "value": "ᛏ - Tyr, die Rune des Kampfes"
+        },
+        {
+          "value": "ᚲ - Kaun, die Rune des Schiffs"
+        }
+      ]
+    },
+    {
+      "value": "Welches Meerestier ist Dir am vertrautesten?",
+      "answers": [
+        {
+          "value": "Muscheln!"
+        },
+        {
+          "value": "Kraken!"
+        },
+        {
+          "value": "Der Finnwal!"
+        },
+        {
+          "value": "Das Meerneunauge…"
+        },
+        {
+          "value": "Quallen."
+        }
+      ]
+    },
+    {
+      "value": "Jetzt wird es brenzlig. Welche Waffe setzt Du gegen einen Berserker ein?",
+      "answers": [
+        {
+          "value": "Ich werde so unauffällig, dass er mich nicht sieht."
+        },
+        {
+          "value": "Ich ritze ihm eine Schadrune."
+        },
+        {
+          "value": "Ich putze ihn mit einem Schmähgedicht runter."
+        },
+        {
+          "value": "Ich würde eine Waffe nehmen, die schreckliche Wunden schlägt. Mit der man ins Herz stoßen, aber auch Gliedmaßen abschlagen kann. Einen Hauspeer."
+        },
+        {
+          "value": "Gegen Berserker hilft nur Weglaufen. "
+        }
+      ]
+    },
+    {
+      "value": "Womit würdest Du es lieber aufnehmen als mit einem Berserker?",
+      "answers": [
+        {
+          "value": "Mit Meeresungeheuern!"
+        },
+        {
+          "value": "Mit Zauberkundigen - Seiðskratti!"
+        },
+        {
+          "value": "Mit Untoten - Draugr."
+        },
+        {
+          "value": "Hey, ist schon okay, ich nehm es auch mit Berserkern auf!"
+        },
+        {
+          "value": "Mit Frostriesen. "
+        }
+      ]
+    },
+    {
+      "value": "Mit welcher Gottheit fühlst Du Dich verbunden?",
+      "answers": [
+        {
+          "value": "Mit Rán, der Herrin des Meeres."
+        },
+        {
+          "value": "Ich hab einen soft spot für Loki."
+        },
+        {
+          "value": "Mit Thor, weil er auch im Brautkleid die besten Geschichten abgibt."
+        },
+        {
+          "value": "Der Marvel-Thor ist ziemlich hot."
+        },
+        {
+          "value": "Mit der Riesin Skadi, Herrin über den Winter und die Jagd."
+        }
+      ]
+    },
+    {
+      "value": "Aber was ist mit Jesus? Wie stehst Du zum Weißen Christ?",
+      "answers": [
+        {
+          "value": "In seinem Namen gibt es immer nur neue Konflikte."
+        },
+        {
+          "value": "Er nutzt alte Macht. Ich auch."
+        },
+        {
+          "value": "Ich finde das Konzept von radikaler Nächstenliebe ziemlich gut."
+        },
+        {
+          "value": "Er hat seine Körperteile über die Kirchen und Klöster der halben Welt verteilt, das ist eklig."
+        },
+        {
+          "value": "Er war ein Außenseiter. Traurig, dass er dafür sterben musste."
+        }
+      ]
+    },
+    {
+      "value": "Eine sexy Frau mit Kuhschwanz will Dich in den Wald locken. Folgst Du ihr? ",
+      "answers": [
+        {
+          "value": "Nein, auf keinen Fall!"
+        },
+        {
+          "value": "Ich weiß es besser, auch wenn ich neugierig bin."
+        },
+        {
+          "value": "Leider ja, sie hätte leichtes Spiel mit mir. "
+        },
+        {
+          "value": "Erst nach der Arbeit, ich habe noch ein Kloster zu plündern!"
+        },
+        {
+          "value": "Ich dachte eigentlich nein, aber plötzlich bin ich im Wald …?"
+        }
+      ]
+    },
+    {
+      "value": "Wo machst Du am liebsten Urlaub? ",
+      "answers": [
+        {
+          "value": "Auf einer Nordsee-Insel."
+        },
+        {
+          "value": "Ich mag Flugreisen."
+        },
+        {
+          "value": "In einer Hütte mit gemütlichem Kamin."
+        },
+        {
+          "value": "Ich brauche einen Abenteuerurlaub mit ordentlich Action!"
+        },
+        {
+          "value": "Auf einem Segelschiff."
+        }
+      ]
+    },
+    {
+      "value": "Leider wird Dein Urlaubsort von Draugr heimgesucht - Untoten. Was tust Du?",
+      "answers": [
+        {
+          "value": "Untote können nicht schwimmen. Ich schon."
+        },
+        {
+          "value": "Ich verwirre sie, sodass sie einander erschlagen."
+        },
+        {
+          "value": "Ich komme mit ihnen klar. Ein paar Zombies gibt es ja in jedem Urlaub."
+        },
+        {
+          "value": "Immer feste druff, was für eine Plage!"
+        },
+        {
+          "value": "Ich verhandle mit ihnen. Auge um Auge."
+        }
+      ]
+    },
+    {
+      "value": "Oh, Loki ist auch hier. Er lädt Dich zum Essen ein!",
+      "answers": [
+        {
+          "value": "Oh nein. In mein Leben mischen sich schon genug Gottheiten ein!"
+        },
+        {
+          "value": "Natürlich. Ich kann viel von ihm lernen."
+        },
+        {
+          "value": "Es wäre unhöflich, auszuschlagen, aber ich bleibe wachsam."
+        },
+        {
+          "value": "Nein, aber ich traue ihm nicht weniger als anderen Asen und Vanen."
+        },
+        {
+          "value": "Ja, er könnte einen Ausweg aus meiner Situation kennen."
+        }
+      ]
+    },
+    {
+      "value": "Und zuletzt: Wähle eine Pflanze!",
+      "answers": [
+        {
+          "value": "Das Seegras."
+        },
+        {
+          "value": "Die Mistel."
+        },
+        {
+          "value": "Ich nehme einen Apfel."
+        },
+        {
+          "value": "Die Hasel."
+        },
+        {
+          "value": "Die Ulme."
+        }
+      ]
+    }
+  ]
+}
