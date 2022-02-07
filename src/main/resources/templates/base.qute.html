@@ -9,12 +9,14 @@
               content="Ein interaktives Online-Quiz um den Launch des Buches 'Schildmaid' von Judith und Christian Vogt zu begleiten.">
         <meta name="keywords" content="Die Vögte, Schildmaid, #girlswhoviking, Quizz, Eyvor, Skade, Tinna">
 
+        {#if twitter_image??}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@JudithCVogt" />
         <meta name="twitter:creator" content="@rotnroll666" />
         <meta name="twitter:title" content="#girlswhoviking">
         <meta name="twitter:description" content="Ein interaktives Online-Quiz zum Buches 'Schildmaid – Das Lied der Skaldin'">
-        <meta name="twitter:image" content="/img/banner_w_1500.png">
+        <meta name="twitter:image" content="{twitter_image}">
+        {/if}
 
         <title>#girlswhoviking {#insert title /}</title>
         <link rel="stylesheet" href="/css/simple.css">

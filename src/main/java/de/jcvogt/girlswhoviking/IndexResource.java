@@ -18,12 +18,15 @@ package de.jcvogt.girlswhoviking;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 
+import java.net.URI;
 import java.util.Objects;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Michael J. Simons
@@ -39,7 +42,8 @@ public class IndexResource {
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	public TemplateInstance get() {
-		return indexTemplate.instance();
+	public TemplateInstance get(@Context UriInfo uriInfo) {
+		return indexTemplate
+			.data("twitter_image", uriInfo.resolve(URI.create("/img/banner_w_1500.png")));
 	}
 }

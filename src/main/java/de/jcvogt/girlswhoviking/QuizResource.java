@@ -26,8 +26,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Michael J. Simons
@@ -49,11 +51,13 @@ public class QuizResource {
 	@Path("start")
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	public TemplateInstance get() {
+	public TemplateInstance get(@Context UriInfo uriInfo) {
 		if (currentQuiz.isDone()) {
 			currentQuiz.reset();
 		}
-		return quizTemplate.data("quiz", currentQuiz);
+		return quizTemplate
+			.data("quiz", currentQuiz)
+			.data("twitter_image", uriInfo.resolve(URI.create("/img/banner_w_1500.png")));
 	}
 
 	@Path("answer")
