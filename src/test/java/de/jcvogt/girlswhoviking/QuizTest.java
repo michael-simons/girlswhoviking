@@ -16,6 +16,7 @@
 package de.jcvogt.girlswhoviking;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.List;
 
@@ -50,5 +51,43 @@ class QuizTest {
 			);
 		assertThat(quiz.evaluate(42)).isTrue();
 		assertThat(quiz.getCurrentQuestion()).isEmpty();
+	}
+
+	@Test
+	void shouldCreateRandomIndexes() {
+
+		var question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", List.of()), 0, true);
+		assertThat(question.indexes()).isEmpty();
+
+		var answers = List.of(
+			new Quiz.Answer("a", List.of()),
+			new Quiz.Answer("b", List.of()),
+			new Quiz.Answer("c", List.of())
+		);
+		question = new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true);
+		assertThat(question.indexes())
+			.hasSize(3)
+			.containsExactlyInAnyOrder(0, 1, 2);
+	}
+
+	@Test
+	void shouldFailOnWrongIndexes() {
+
+		var answers = List.of(
+			new Quiz.Answer("a", List.of()),
+			new Quiz.Answer("b", List.of()),
+			new Quiz.Answer("c", List.of())
+		);
+		assertThatIllegalArgumentException().isThrownBy(
+				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true, List.of()))
+			.withMessage("Invalid number of indexes.");
+		assertThatIllegalArgumentException().isThrownBy(
+				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
+					List.of(-1, 0, 1)))
+			.withMessage("Invalid index in index list.");
+		assertThatIllegalArgumentException().isThrownBy(
+				() -> new Quiz.CurrentQuestion(new Quiz.Question("Was ist die Antwort?", answers), 0, true,
+					List.of(0, 1, 42)))
+			.withMessage("Invalid index in index list.");
 	}
 }

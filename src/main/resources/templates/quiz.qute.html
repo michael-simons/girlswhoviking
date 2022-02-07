@@ -9,8 +9,8 @@
     <div class="inline-forms">
         <form method="post" action="/answer">
             <p>
-                {#for answer in currentQuestion.answers}
-                <label><input name="selectedAnswer" type="radio" value="{answer_index}"/>{answer.value}</label> <br/>
+                {#for index in currentQuestion.indexes}
+                <label><input name="selectedAnswer" type="radio" value="{index}"/>{currentQuestion.answers.get(index).value}</label> <br/>
                 {/for}
             </p>
             <button type="submit">{currentQuestion.last ? 'Auswerten' : 'Weiter'}</button>

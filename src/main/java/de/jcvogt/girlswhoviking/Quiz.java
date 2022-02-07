@@ -15,6 +15,9 @@
  */
 package de.jcvogt.girlswhoviking;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 /**
  * @author Michael J. Simons
@@ -55,11 +59,29 @@ public class Quiz implements Serializable {
 	/**
 	 * Represents the current question to be answered.
 	 *
-	 * @param value the underlying question
-	 * @param idx   the 1-based-index in the list of questions
-	 * @param last  a flag if this is the last question
+	 * @param value   the underlying question
+	 * @param idx     the 1-based-index in the list of questions
+	 * @param last    a flag if this is the last question
+	 * @param indexes randomized indexes
 	 */
-	public record CurrentQuestion(Question value, int idx, boolean last) {
+	public record CurrentQuestion(Question value, int idx, boolean last, List<Integer> indexes) {
+
+		public CurrentQuestion {
+			if (indexes.size() != value.answers.size()) {
+				throw new IllegalArgumentException("Invalid number of indexes.");
+			}
+			if (indexes.stream().anyMatch(i -> i < 0 || i >= value.answers().size())) {
+				throw new IllegalArgumentException("Invalid index in index list.");
+			}
+		}
+
+		public CurrentQuestion(Question value, int idx, boolean last) {
+			this(value, idx, last, IntStream.range(0, value.answers().size()).boxed()
+				.collect(collectingAndThen(toList(), l -> {
+					Collections.shuffle(l);
+					return List.copyOf(l);
+				})));
+		}
 
 		public String question() {
 			return value.value();
