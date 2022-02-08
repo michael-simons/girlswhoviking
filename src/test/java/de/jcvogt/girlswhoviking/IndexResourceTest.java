@@ -38,7 +38,6 @@ public class IndexResourceTest {
 			.header("X-Forwarded-Proto", "https")
 			.header("X-Forwarded-Host", "somehost")
 			.when().get("/")
-			.prettyPeek()
 			.then()
 			.statusCode(200)
 			.body(containsString(expected));
