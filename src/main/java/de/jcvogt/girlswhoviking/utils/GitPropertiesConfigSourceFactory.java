@@ -21,8 +21,8 @@ import io.smallrye.config.PropertiesConfigSource;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
@@ -34,8 +34,8 @@ public final class GitPropertiesConfigSourceFactory implements ConfigSourceFacto
 	@Override
 	public Iterable<ConfigSource> getConfigSources(ConfigSourceContext configSourceContext) {
 		try {
-			var gitProperties = Objects.requireNonNull(this.getClass().getClassLoader().getResource("git.properties"));
-			return List.of(new PropertiesConfigSource(gitProperties));
+			var gitProperties = this.getClass().getClassLoader().getResource("git.properties");
+			return gitProperties == null ? Collections.emptyList() : List.of(new PropertiesConfigSource(gitProperties));
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}

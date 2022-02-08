@@ -46,7 +46,12 @@
                     href="https://twitter.com/rotnroll666">@rotnroll666</a>.<br/>
                 Verfügbar als Open Source Projekt unter Apache 2 Lizenz: <a
                     href="https://github.com/michael-simons/girlswhoviking">github.com/michael-simons/girlswhoviking</a>,
-                aktuelle Version <a href="https://github.com/michael-simons/girlswhoviking/commit/{cdi:gitId.full}">{cdi:gitId.abbrev}</a>.
+                aktuelle Version
+                {#if !cdi:gitId.unknown}
+                <a href="https://github.com/michael-simons/girlswhoviking/commit/{cdi:gitId.full}">{cdi:gitId.abbrev}</a>.
+                {#else}
+                {cdi:gitId.abbrev}
+                {/if}
             </p>
         </footer>
     </body>

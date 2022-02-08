@@ -15,6 +15,8 @@
  */
 package de.jcvogt.girlswhoviking.utils;
 
+import java.util.Optional;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -26,14 +28,16 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @Named("gitId")
 @Singleton final class GitId {
 
+	private static final String NA = "unbekannt";
+
 	private final String abbrev;
 
 	private final String full;
 
-	GitId(@ConfigProperty(name = "git.commit.id.abbrev") String abbrev,
-		@ConfigProperty(name = "git.commit.id.full") String full) {
-		this.abbrev = abbrev;
+	GitId(@ConfigProperty(name = "git.commit.id.full", defaultValue = NA) String full,
+		@ConfigProperty(name = "git.commit.id.abbrev") Optional<String> abbrev) {
 		this.full = full;
+		this.abbrev = abbrev.orElseGet(() -> isUnknown() ? NA : full.substring(0, Math.min(8, full.length())));
 	}
 
 	public String getAbbrev() {
@@ -42,5 +46,9 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 	public String getFull() {
 		return full;
+	}
+
+	public boolean isUnknown() {
+		return NA.equals(full);
 	}
 }
