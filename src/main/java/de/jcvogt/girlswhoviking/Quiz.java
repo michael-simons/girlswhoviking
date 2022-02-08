@@ -154,6 +154,11 @@ public class Quiz implements Serializable {
 			new CurrentQuestion(questions.get(idx), idx + 1, idx == this.questions.size() - 1));
 	}
 
+	public String getRandomName() {
+		var numOutcomes = definition.outcomes().size();
+		return definition.outcomes().get(ThreadLocalRandom.current().nextInt(0, numOutcomes)).name();
+	}
+
 	public boolean evaluate(Integer selectedAnswer) {
 
 		if (isDone()) {

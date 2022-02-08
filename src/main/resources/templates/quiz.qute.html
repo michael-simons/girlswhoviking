@@ -5,12 +5,18 @@
 
     {#let currentQuestion=quiz.currentQuestion.orElse(null)}
     {#if currentQuestion}
+    <div class="centered-content">
+        <figure>
+            <img src="/img/{str:l(quiz.randomName)}_slice.png" alt="Eine zufällige Vorschau">
+        </figure>
+    </div>
     <h3>Frage {currentQuestion.idx}: {currentQuestion.question}</h3>
     <div class="inline-forms">
         <form method="post" action="/answer">
             <p>
                 {#for index in currentQuestion.indexes}
-                <label><input name="selectedAnswer" type="radio" value="{index}"/>{currentQuestion.answers.get(index).value}</label> <br/>
+                <label><input name="selectedAnswer" type="radio" value="{index}"/>{currentQuestion.answers.get(index).value}</label>
+                <br/>
                 {/for}
             </p>
             <button type="submit">{currentQuestion.last ? 'Auswerten' : 'Weiter'}</button>
