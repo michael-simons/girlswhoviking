@@ -21,11 +21,11 @@ import static java.util.stream.Collectors.toList;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -128,9 +128,9 @@ public class Quiz implements Serializable {
 	private final Definition definition;
 	private final List<Question> questions;
 
-	private int counter = 0;
+	private int idx = 0;
 
-	private final Map<Integer, Integer> points = new TreeMap<>();
+	private final Map<Outcome, Integer> counts = new LinkedHashMap<>();
 
 	private Outcome outcome;
 
@@ -140,7 +140,7 @@ public class Quiz implements Serializable {
 	}
 
 	public boolean isDone() {
-		return this.counter >= questions.size();
+		return this.idx >= questions.size();
 	}
 
 	public Optional<CurrentQuestion> getCurrentQuestion() {
@@ -149,9 +149,10 @@ public class Quiz implements Serializable {
 			return Optional.empty();
 		}
 
-		var idx = this.counter;
-		return Optional.of(
-			new CurrentQuestion(questions.get(idx), idx + 1, idx == this.questions.size() - 1));
+		synchronized (this) {
+			return Optional.of(
+				new CurrentQuestion(questions.get(this.idx), this.idx + 1, this.idx == this.questions.size() - 1));
+		}
 	}
 
 	public String getRandomName() {
@@ -165,7 +166,7 @@ public class Quiz implements Serializable {
 			return true;
 		}
 
-		var selectedQuestions = questions.get(this.counter);
+		var selectedQuestions = questions.get(this.idx);
 		var answers = selectedQuestions.answers();
 
 		Objects.requireNonNull(selectedAnswer);
@@ -173,19 +174,23 @@ public class Quiz implements Serializable {
 			throw new IllegalArgumentException("Illegal answer (%d)".formatted(selectedAnswer));
 		}
 
-		var increments = answers.get(selectedAnswer).increments();
-		if (increments.size() != answers.size()) {
-			var value = this.points.getOrDefault(selectedAnswer, 0);
-			this.points.put(selectedAnswer, value + 1);
-		} else {
-			for (int i = 0; i < increments.size(); i++) {
-				var increment = increments.get(i);
-				var value = this.points.getOrDefault(i, 0);
-				this.points.put(i, value + increment);
+		synchronized (this) {
+			var increments = answers.get(selectedAnswer).increments();
+			if (increments.size() != answers.size()) {
+				var key = this.definition.outcomes.get(selectedAnswer);
+				var value = this.counts.getOrDefault(key, 0);
+				this.counts.put(key, value + 1);
+			} else {
+				for (int i = 0; i < increments.size(); i++) {
+					var increment = increments.get(i);
+					var key = this.definition.outcomes.get(i);
+					var value = this.counts.getOrDefault(key, 0);
+					this.counts.put(key, value + increment);
+				}
 			}
-		}
 
-		++this.counter;
+			++this.idx;
+		}
 		return isDone();
 	}
 
@@ -198,31 +203,32 @@ public class Quiz implements Serializable {
 		}
 
 		if (this.outcome == null) {
-			// Cache this so that a possible randomization of a non-unique answer is stable
-			this.outcome = this.points.entrySet().stream().max(Map.Entry.comparingByValue())
-				.map(maxEntry -> {
-					var allEntriesWithValue = points.entrySet().stream()
-						.filter(e -> e.getValue().equals(maxEntry.getValue()))
-						.toList();
+			synchronized (this) {
+				// Cache this so that a possible randomization of a non-unique answer is stable
+				this.outcome = this.counts.entrySet().stream().max(Map.Entry.comparingByValue())
+					.map(maxEntry -> {
+						var allEntriesWithValue = counts.entrySet().stream()
+							.filter(e -> e.getValue().equals(maxEntry.getValue()))
+							.toList();
 
-					if (allEntriesWithValue.size() == 1) {
-						return maxEntry;
-					} else {
-						var index = ThreadLocalRandom.current().nextInt(0, allEntriesWithValue.size());
-						return allEntriesWithValue.get(index);
-					}
-				})
-				.map(Map.Entry::getKey)
-				.map(definition.outcomes()::get)
-				.get();
+						if (allEntriesWithValue.size() == 1) {
+							return maxEntry;
+						} else {
+							var index = ThreadLocalRandom.current().nextInt(0, allEntriesWithValue.size());
+							return allEntriesWithValue.get(index);
+						}
+					})
+					.map(Map.Entry::getKey)
+					.get();
+			}
 		}
 
 		return Optional.of(this.outcome);
 	}
 
-	public void reset() {
-		this.counter = 0;
-		this.points.clear();
+	public synchronized void reset() {
+		this.idx = 0;
+		this.counts.clear();
 		this.outcome = null;
 	}
 }

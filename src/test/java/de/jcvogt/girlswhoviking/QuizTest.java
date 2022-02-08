@@ -42,7 +42,7 @@ class QuizTest {
 	void shouldAdvanceAfterEvaluate() {
 
 		var question = new Quiz.Question("Was ist die Antwort?", List.of(new Quiz.Answer("42", List.of())));
-		var quiz = new Quiz(new Quiz.Definition(List.of(), List.of(question)));
+		var quiz = new Quiz(new Quiz.Definition(List.of(new Quiz.Outcome("n", "t", "d", "q")), List.of(question)));
 		assertThat(quiz.getCurrentQuestion())
 			.hasValueSatisfying(c -> {
 					assertThat(c.last()).isTrue();
