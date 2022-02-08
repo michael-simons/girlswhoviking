@@ -19,3 +19,11 @@ div.inline-forms form {
 input[type="radio"] {
     margin-right: 0.5em;
 }
+
+blockquote p:first-child::before {
+    content: "„";
+}
+
+blockquote p:first-child::after {
+    content: "“";
+}
