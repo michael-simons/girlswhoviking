@@ -26,7 +26,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  * @author Michael J. Simons
  */
 @Named("gitId")
-@Singleton final class GitId {
+@Singleton
+final class GitId {
 
 	private static final String NA = "unbekannt";
 
