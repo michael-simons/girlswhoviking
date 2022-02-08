@@ -11,10 +11,11 @@
 
         {#if twitter_image??}
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="@JudithCVogt" />
-        <meta name="twitter:creator" content="@rotnroll666" />
+        <meta name="twitter:site" content="@JudithCVogt"/>
+        <meta name="twitter:creator" content="@rotnroll666"/>
         <meta name="twitter:title" content="#girlswhoviking">
-        <meta name="twitter:description" content="Ein interaktives Online-Quiz zum Buch 'Schildmaid – Das Lied der Skaldin'">
+        <meta name="twitter:description"
+              content="Ein interaktives Online-Quiz zum Buch 'Schildmaid – Das Lied der Skaldin'">
         <meta name="twitter:image" content="{twitter_image}">
         {/if}
 
@@ -36,13 +37,16 @@
                 Vikingzeitalter, eine
                 feministische Fabel und ein Buddymovie mit 20 Frauen auf einem Schiff.</p>
         </header>
-        {#insert}<main></main>{/}
+        {#insert}
+        <main></main>
+        {/}
         <footer>
             <p>
                 #girlswhoviking wurde programmiert von <a href="http://michael-simons.eu">Michael Simons</a> aka <a
                     href="https://twitter.com/rotnroll666">@rotnroll666</a>.<br/>
                 Verfügbar als Open Source Projekt unter Apache 2 Lizenz: <a
-                    href="https://github.com/michael-simons/girlswhoviking">github.com/michael-simons/girlswhoviking</a>.
+                    href="https://github.com/michael-simons/girlswhoviking">github.com/michael-simons/girlswhoviking</a>,
+                aktuelle Version <a href="https://github.com/michael-simons/girlswhoviking/commit/{cdi:gitId.full}">{cdi:gitId.abbrev}</a>.
             </p>
         </footer>
     </body>

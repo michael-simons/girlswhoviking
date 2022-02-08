@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.jcvogt.girlswhoviking;
+package de.jcvogt.girlswhoviking.utils;
 
 import io.quarkus.qute.TemplateExtension;
 
@@ -25,7 +25,7 @@ import java.util.Locale;
  * @author Michael J. Simons
  */
 @TemplateExtension(namespace = "str")
-public final class StrExtensions {
+final class StrExtensions {
 
 	static String l(String s) {
 		return s.substring(0, 1).toLowerCase(Locale.ROOT) + s.substring(1);
