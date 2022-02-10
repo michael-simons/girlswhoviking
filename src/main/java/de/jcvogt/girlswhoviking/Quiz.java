@@ -61,12 +61,13 @@ public class Quiz implements Serializable {
 	/**
 	 * The possible outcome of a quiz
 	 *
-	 * @param name        The name of the person
-	 * @param title       The persons title
-	 * @param description A description
-	 * @param quote       A quote
+	 * @param name         The name of the person
+	 * @param title        The persons title
+	 * @param description  A description
+	 * @param quote        A quote
+	 * @param optionalLink An optional link
 	 */
-	public record Outcome(String name, String title, String description, String quote) {
+	public record Outcome(String name, String title, String description, String quote, String optionalLink) {
 
 		public String formattedQuote() {
 			return "\"" + quote() + "\"\n- " + name + "\nMach auch Du das Quiz:";

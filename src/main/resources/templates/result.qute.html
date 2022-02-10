@@ -23,6 +23,11 @@
 
     <p>Du bist <strong>{result.name}</strong>, {str:l(result.title)}: {result.description}</p>
 
+    <blockquote>
+        <p>{result.quote}</p>
+        <p><cite>- {result.name}</cite></p>
+    </blockquote>
+
     <div class="centered-content">
         <figure>
             <img src="/img/{str:l(result.name)}.jpg" alt="{result.name}">
@@ -30,19 +35,18 @@
         </figure>
     </div>
 
-    <blockquote>
-        <p>{result.quote}</p>
-        <p><cite>- {result.name}</cite></p>
-    </blockquote>
-
     <p>
+        {#if result.optionalLink } Lies den Twitter-Thread zu <a href="{result.optionalLink}">{result.name}</a> oder teile{#else}Teile{/if} Dein Ergebnis:
         <a class="twitter-share-button"
            href="https://twitter.com/intent/tweet?text={str:urlEncode(result.formattedQuote)}&url=https://die13gezeichneten.herokuapp.com">Teilen</a>
         <br/>
-        <a href="/start">Nochmal von vorne beginnen</a> oder direkt das Buch <a
+        Du kannst das Quiz beliebig oft <a href="/start">von vorne beginnen</a> oder auch das Buch direkt <a
             href="https://www.piper.de/buecher/schildmaid-isbn-978-3-492-70598-1">beim Verlag</a> bestellen.</a>
         Die Vögte sind als <a href="https://www.patreon.com/dievoegte">Vogt&Vriends</a> auf Patreon und freuen sich über
-        eure Unterstützung.
+        Deine Unterstützung.
+    </p>
+    <p>
+        Das Artwork der Figuren hat <a href="https://twitter.com/Risto_Licious">@Risto_Licious</a> gestaltet.
     </p>
 </main>
 {/include}
