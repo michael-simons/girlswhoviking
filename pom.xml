@@ -33,6 +33,7 @@
 	</developers>
 
 	<properties>
+		<assertj-core.version>3.22.0</assertj-core.version>
 		<checkstyle.version>10.1</checkstyle.version>
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
 		<failsafe.useModulePath>false</failsafe.useModulePath>
@@ -45,7 +46,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-		<quarkus.platform.version>2.7.5.Final</quarkus.platform.version>
+		<quarkus.platform.version>2.8.1.Final</quarkus.platform.version>
 		<sortpom-maven-plugin.version>3.0.1</sortpom-maven-plugin.version>
 		<surefire-plugin.version>3.0.0-M6</surefire-plugin.version>
 		<write-properties-file-maven-plugin.version>1.0.1</write-properties-file-maven-plugin.version>
@@ -94,6 +95,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
+			<version>${assertj-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
