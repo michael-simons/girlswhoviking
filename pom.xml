@@ -34,7 +34,7 @@
 
 	<properties>
 		<assertj-core.version>3.23.1</assertj-core.version>
-		<checkstyle.version>10.3.4</checkstyle.version>
+		<checkstyle.version>10.4</checkstyle.version>
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
 		<failsafe.useModulePath>false</failsafe.useModulePath>
 		<git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
